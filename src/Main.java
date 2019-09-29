@@ -29,6 +29,8 @@ public class Main extends Application
     private static boolean perlin = false;
     private static double xoff = 10;
     private static double xdif = 0.005;
+    //
+    public static boolean colorMode = false;
 
     @Override
     public void start(Stage stage) throws Exception
@@ -94,6 +96,11 @@ public class Main extends Application
                 {
                     //Show Child Count
                     System.out.println("Child Count: " + child.size());
+                    break;
+                }
+                case F5:
+                {
+                    colorMode = !colorMode;
                     break;
                 }
             }

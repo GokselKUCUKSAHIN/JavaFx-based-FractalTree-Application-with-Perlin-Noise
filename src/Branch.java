@@ -19,6 +19,9 @@ public class Branch
     Point2D l;
     Branch right;
     Branch left;
+    double xoff = 12;
+    boolean done = false;
+    double thickness = 6;
 
     public Branch(Point2D begin, Point2D end)
     {
@@ -26,7 +29,8 @@ public class Branch
         this.begin = begin;
         this.end = end;
         node = new Line(begin.getX(), begin.getY(), end.getX(), end.getY());
-        node.setStrokeWidth(2.1);
+        //node.setStrokeWidth(2.1);
+        node.setStrokeWidth(this.thickness);
         node.setStroke(Color.SNOW);
         angle = Utils.calculateAngle(begin, end);
         length = Utils.distance(begin, end);
@@ -46,6 +50,10 @@ public class Branch
         left = new Branch(this.end, l);
         right.prevAng = this.angle;
         left.prevAng = this.angle;
+        right.xoff = this.xoff += 0.1;
+        left.xoff = this.xoff += 0.1;
+        right.setThickness(this.thickness*0.8);
+        left.setThickness(this.thickness*0.8);
     }
 
     public double getLength()
@@ -67,7 +75,11 @@ public class Branch
         this.node.setEndX(end.getX());
         this.node.setEndY(end.getY());
     }
-
+    public void setThickness(double thickness)
+    {
+        this.thickness = thickness;
+        this.node.setStrokeWidth(thickness);
+    }
     public void updateR(double updAngle)
     {
         if (right != null)
@@ -77,6 +89,20 @@ public class Branch
             Point2D endR = Utils.endPoint(this.end, ang, right.getLength());
             this.right.setEnd(endR);
             this.right.prevAng = this.angle;
+        }
+        this.xoff += 0.001;
+        if (Main.colorMode)
+        {
+            double noise = PerlinNoise.noise(xoff, 0, 0, 360, true);
+            this.node.setStroke(Color.hsb(noise, 1, 1));
+            done = false;
+        } else
+        {
+            if (!done)
+            {
+                this.node.setStroke(Color.SNOW);
+                done = true;
+            }
         }
     }
 
@@ -89,6 +115,20 @@ public class Branch
             Point2D endL = Utils.endPoint(this.end, ang, left.getLength());
             this.left.setEnd(endL);
             this.left.prevAng = this.angle;
+        }
+        this.xoff += 0.001;
+        if (Main.colorMode)
+        {
+            double noise = PerlinNoise.noise(xoff, 0, 0, 360, true);
+            this.node.setStroke(Color.hsb(noise, 1, 1));
+            done = false;
+        } else
+        {
+            if (!done)
+            {
+                this.node.setStroke(Color.SNOW);
+                done = true;
+            }
         }
     }
 }
