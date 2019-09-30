@@ -39,7 +39,7 @@ public class Main extends Application
         Pane pane = new Pane();
         child = pane.getChildren();
         pane.setBackground(background);
-        Slider sl = new Slider(-90, 0, 30);
+        Slider sl = new Slider(-90, 0, -30);
         root.setCenter(pane);
         root.setPadding(new Insets(10, 10, 5, 10));
         root.setBottom(sl);
@@ -114,6 +114,10 @@ public class Main extends Application
                 Branch temp = Branch.branches.get(i);
                 temp.updateR(noise);
                 temp.updateL(noise);
+            }
+            if(colorMode)
+            {
+                Branch.yoff +=0.001;
             }
         }));
         update.setCycleCount(Timeline.INDEFINITE);

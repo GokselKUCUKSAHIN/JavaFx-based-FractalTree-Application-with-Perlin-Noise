@@ -9,19 +9,20 @@ public class Branch
 {
 
     public static ArrayList<Branch> branches = new ArrayList<>();
-    Point2D begin;
-    Point2D end;
-    Line node;
-    double prevAng = 0;
-    double angle = 0;
-    double length = 0;
-    Point2D r;
-    Point2D l;
-    Branch right;
-    Branch left;
-    double xoff = 12;
-    boolean done = false;
-    double thickness = 6;
+    private Point2D begin;
+    private Point2D end;
+    private Line node;
+    private double prevAng = 0;
+    private double angle = 0;
+    private double length = 0;
+    private Point2D r;
+    private Point2D l;
+    private Branch right;
+    private Branch left;
+    private double xoff = 12;
+    public static double yoff = 1;
+    private boolean done = false;
+    private double thickness = 6;
 
     public Branch(Point2D begin, Point2D end)
     {
@@ -52,8 +53,8 @@ public class Branch
         left.prevAng = this.angle;
         right.xoff = this.xoff += 0.1;
         left.xoff = this.xoff += 0.1;
-        right.setThickness(this.thickness*0.8);
-        left.setThickness(this.thickness*0.8);
+        right.setThickness(this.thickness * 0.8);
+        left.setThickness(this.thickness * 0.8);
     }
 
     public double getLength()
@@ -75,11 +76,13 @@ public class Branch
         this.node.setEndX(end.getX());
         this.node.setEndY(end.getY());
     }
+
     public void setThickness(double thickness)
     {
         this.thickness = thickness;
         this.node.setStrokeWidth(thickness);
     }
+
     public void updateR(double updAngle)
     {
         if (right != null)
@@ -90,10 +93,10 @@ public class Branch
             this.right.setEnd(endR);
             this.right.prevAng = this.angle;
         }
-        this.xoff += 0.001;
+        //this.xoff += 0.001;
         if (Main.colorMode)
         {
-            double noise = PerlinNoise.noise(xoff, 0, 0, 360, true);
+            double noise = PerlinNoise.noise(xoff, yoff, 0, 360, true);
             this.node.setStroke(Color.hsb(noise, 1, 1));
             done = false;
         } else
@@ -116,10 +119,10 @@ public class Branch
             this.left.setEnd(endL);
             this.left.prevAng = this.angle;
         }
-        this.xoff += 0.001;
+        //this.xoff += 0.001;
         if (Main.colorMode)
         {
-            double noise = PerlinNoise.noise(xoff, 0, 0, 360, true);
+            double noise = PerlinNoise.noise(xoff, yoff, 0, 360, true);
             this.node.setStroke(Color.hsb(noise, 1, 1));
             done = false;
         } else
